@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.noelmace.android.demo.littlenote.MainActivity" >
+
+    <LinearLayout
+        android:id="@+id/buttons_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/bold_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="bold"
+            android:text="@string/bold_text"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/italic_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="italic"
+            android:text="@string/italic_text"
+            android:textStyle="italic|bold" />
+
+        <Button
+            android:id="@+id/underline_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="underline"
+            android:text="@string/underline_text"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/note_view"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/buttons_layout"
+        android:hint="@string/note_hint"
+        android:lines="@integer/note_edit_lines"
+        android:textSize="@dimen/note_edite_textsize"
+        android:background="#F0F0F0" />
+    
+    <ImageButton
+            android:id="@+id/show_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/send_button_desc"
+            android:onClick="send"
+            android:src="@drawable/ic_send_button"
+            android:layout_below="@id/note_view" />
+
+</RelativeLayout>

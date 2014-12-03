@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Little Note</string>
+    <string name="action_settings">Settings</string>
+    <string name="note_hint">Note</string>
+    <string name="bold_text">B</string>
+    <string name="italic_text">i</string>
+    <string name="underline_text"><u>u</u></string>
+    <string name="send_button_desc">send</string>
+    
+
+</resources>
