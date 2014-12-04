@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:onClick="bold"
+            android:onClick="changeStyle"
             android:text="@string/bold_text"
             android:textStyle="bold" />
 
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:onClick="italic"
+            android:onClick="changeStyle"
             android:text="@string/italic_text"
             android:textStyle="italic|bold" />
 
@@ -38,15 +38,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:onClick="underline"
+            android:onClick="changeStyle"
             android:text="@string/underline_text"
             android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/noeffect_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="changeStyle"
+            android:text="@string/noeffect_text"
+            android:textStyle="normal" />
+        
     </LinearLayout>
 
     <EditText
         android:id="@+id/note_view"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/buttons_layout"
         android:hint="@string/note_hint"
         android:lines="@integer/note_edit_lines"

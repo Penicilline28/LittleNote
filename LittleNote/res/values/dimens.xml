@@ -3,7 +3,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <integer name="note_edit_lines">5</integer>
+    <integer name="note_edit_lines">8</integer>
     <dimen name="note_edite_textsize">15sp</dimen>
 
 </resources>

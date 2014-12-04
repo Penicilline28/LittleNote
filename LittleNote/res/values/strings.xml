@@ -8,6 +8,8 @@
     <string name="italic_text">i</string>
     <string name="underline_text"><u>u</u></string>
     <string name="send_button_desc">send</string>
+    <string name="noeffect_text">X</string>
+    
     
 
 </resources>
