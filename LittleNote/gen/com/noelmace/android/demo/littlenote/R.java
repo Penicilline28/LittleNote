@@ -21,20 +21,22 @@ public final class R {
         public static final int activity_horizontal_margin=0x7f040000;
         public static final int activity_vertical_margin=0x7f040001;
         public static final int note_edite_textsize=0x7f040002;
+        public static final int note_title_margin=0x7f040003;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int ic_noeffect=0x7f020001;
-        public static final int ic_send_button=0x7f020002;
+        public static final int ic_action_save=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int ic_noeffect=0x7f020002;
     }
     public static final class id {
+        public static final int action_save=0x7f090008;
         public static final int action_settings=0x7f090007;
         public static final int bold_button=0x7f090001;
         public static final int buttons_layout=0x7f090000;
         public static final int italic_button=0x7f090002;
         public static final int noeffect_button=0x7f090004;
-        public static final int note_view=0x7f090005;
-        public static final int show_button=0x7f090006;
+        public static final int note_content_view=0x7f090006;
+        public static final int note_title_view=0x7f090005;
         public static final int underline_button=0x7f090003;
     }
     public static final class integer {
@@ -45,15 +47,17 @@ public final class R {
     }
     public static final class menu {
         public static final int main=0x7f080000;
+        public static final int note_edit_actions=0x7f080001;
     }
     public static final class string {
+        public static final int action_save_title=0x7f060006;
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
         public static final int bold_text=0x7f060003;
         public static final int italic_text=0x7f060004;
         public static final int noeffect_text=0x7f060007;
-        public static final int note_hint=0x7f060002;
-        public static final int send_button_desc=0x7f060006;
+        public static final int note_content_hint=0x7f060002;
+        public static final int note_title_hint=0x7f060008;
         public static final int underline_text=0x7f060005;
     }
     public static final class style {

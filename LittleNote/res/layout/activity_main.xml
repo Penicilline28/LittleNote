@@ -50,28 +50,29 @@
             android:onClick="changeStyle"
             android:text="@string/noeffect_text"
             android:textStyle="normal" />
-        
     </LinearLayout>
-
+    
     <EditText
-        android:id="@+id/note_view"
+        android:id="@+id/note_title_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/buttons_layout"
-        android:hint="@string/note_hint"
-        android:lines="@integer/note_edit_lines"
+        android:background="#F0F0F0"
+        android:hint="@string/note_title_hint"
+        android:lines="1"
         android:textSize="@dimen/note_edite_textsize"
-        android:background="#F0F0F0" />
-    
-    <ImageButton
-            android:id="@+id/show_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/send_button_desc"
-            android:onClick="send"
-            android:src="@drawable/ic_send_button"
-            android:layout_below="@id/note_view" />
+        android:layout_marginBottom="@dimen/note_title_margin"
+        />
+
+    <EditText
+        android:id="@+id/note_content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/note_title_view"
+        android:background="#F0F0F0"
+        android:hint="@string/note_content_hint"
+        android:lines="@integer/note_edit_lines"
+        android:textSize="@dimen/note_edite_textsize" />
+
 
 </RelativeLayout>
