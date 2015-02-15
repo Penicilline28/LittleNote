@@ -10,7 +10,8 @@
     <string name="action_save_title">save</string>
     <string name="noeffect_text">X</string>
     <string name="note_title_hint">Titre</string>
-    
-    
+    <string name="title_activity_main">MainActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_add_title">add a note</string>
 
 </resources>

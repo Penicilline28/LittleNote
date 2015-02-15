@@ -1,198 +1,104 @@
 package com.noelmace.android.demo.littlenote;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.CharacterStyle;
-import android.text.style.StyleSpan;
-import android.text.style.UnderlineSpan;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
-import com.noelmace.android.demo.littlenote.dao.DaoException;
-import com.noelmace.android.demo.littlenote.entitties.Note;
-import com.noelmace.android.demo.littlenote.sqlite.DbHelper;
-import com.noelmace.android.demo.littlenote.sqlite.NoteSqliteDao;
+public class MainActivity extends SQLiteDaoActivity implements
+		NoteTitlesFragment.OnTitleSelectedListener {
 
-public class MainActivity extends Activity {
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	    DbHelper.close(MainActivity.this);
-	}
-
-	@Override
-	protected void onPause() {
-	    DbHelper.close(MainActivity.this);
-		super.onPause();
-	}
-
-	@Override
-	protected void onRestart() {
-		// TODO Auto-generated method stub
-		super.onRestart();
-	}
-
-	@Override
-	protected void onResume() {
-		dao = new NoteSqliteDao(MainActivity.this);
-		super.onResume();
-	}
-
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-	}
-
-	@Override
-	protected void onStop() {
-		// TODO Auto-generated method stub
-		super.onStop();
-	}
-
-	@Override
-	protected void onUserLeaveHint() {
-		// TODO Auto-generated method stub
-		super.onUserLeaveHint();
-	}
-
-	 private static final String LOG_TAG =
-	 "com.noelmace.android.demo.littlenote.warning";
-
-	private EditText noteContentView;
-	private EditText noteTitleView;
+	private static final String LOG_TAG = "com.noelmace.android.demo.littlenote.MainActivity";
 	
-	private NoteSqliteDao dao;
-
-
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		noteContentView = (EditText) findViewById(R.id.note_content_view);
-		noteTitleView = (EditText) findViewById(R.id.note_title_view);
-		
-		dao = new NoteSqliteDao(MainActivity.this);
+		if (findViewById(R.id.fragment_container) != null) {
 
+			if (savedInstanceState != null)
+				return;
 
-		if (savedInstanceState != null) {
-			return;
+			NoteTitlesFragment titlesFragment = new NoteTitlesFragment();
+			
+
+			titlesFragment.setArguments(getIntent().getExtras());
+
+			getSupportFragmentManager().beginTransaction()
+					.replace(R.id.fragment_container, titlesFragment, "titles_fragment").commit();
 		}
-
-	}
-	
-	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.note_edit_actions, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
-        switch (item.getItemId()) {
-            case R.id.action_save:
-                save();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		
-		super.onSaveInstanceState(outState);
 	}
 
-	// TODO : unifier, simplifier
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
 
-	public void changeStyle(View view) {
-		int start = noteContentView.getSelectionStart();
-		int end = noteContentView.getSelectionEnd();
-		SpannableStringBuilder ssb = new SpannableStringBuilder(noteContentView.getText());
-		SpannableStringBuilder subSsb = new SpannableStringBuilder(ssb, start, end);
-		CharacterStyle style = new StyleSpan(android.graphics.Typeface.NORMAL);
-		
-		
-		if(view.getId() == R.id.noeffect_button){
-			CharacterStyle[] toRemoveSpans = subSsb.getSpans(0, subSsb.length(), CharacterStyle.class);
-			for(int i = 0; i < toRemoveSpans.length; i++){
-				ssb.removeSpan(toRemoveSpans[i]);
-			}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		switch (item.getItemId()) {
+		case R.id.action_add:
+			addNote();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		switch (view.getId()) {
-			case R.id.bold_button:
-				style = new StyleSpan(android.graphics.Typeface.BOLD);
-				break;
-			case R.id.italic_button:
-				style = new StyleSpan(android.graphics.Typeface.ITALIC);
-				break;
-			case R.id.underline_button:
-				style = new UnderlineSpan();
-				break;
-			case R.id.noeffect_button:
-				style = null;
-				break;
-			default:
-				Log.w(LOG_TAG, view.getId() + "is not implemented");
-				break;
-		}
-		
-		if(start != end){
-			ssb.setSpan(style, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+	}
+
+	private void addNote() {
+		Intent intent = new Intent(this, EditActivity.class);
+		startActivity(intent);
+	}
+
+	@Override
+	public void onNoteSelected(int position) {
+
+		NoteContentFragment contentFrag = (NoteContentFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.note_content_fragment);
+
+		if (contentFrag != null) {
+			contentFrag.updateNoteView(position);
 		} else {
-			// TODO
-		}
+			contentFrag = new NoteContentFragment();
 
-		noteContentView.setText(ssb);
-		noteContentView.setSelection(start, end);
-		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.showSoftInput(noteContentView, InputMethodManager.SHOW_IMPLICIT);
+			Bundle args = new Bundle();
+			args.putInt(NoteContentFragment.POS_KEY, position);
+			contentFrag.setArguments(args);
+			FragmentTransaction transaction = getSupportFragmentManager()
+					.beginTransaction();
+
+			transaction.replace(R.id.fragment_container, contentFrag, "content_fragment");
+			transaction.addToBackStack(null);
+
+			transaction.commit();
+		}
 	}
 
-
-	public void save() {
-		// TODO fragment for verification
+	/*
+	@Override
+	public void onCommit() {
+		NoteTitlesFragment titlesFrag = null;
 		try {
-			dao.create(new Note(noteTitleView.getText().toString(), Html.toHtml(noteContentView.getText())));
-		} catch (DaoException e) {
-			// TODO : use string resources for text
-			// TODO : externalize
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-					MainActivity.this);
-	 
-				// set title
-				alertDialogBuilder.setTitle("Error");
-	 
-				// set dialog message
-				alertDialogBuilder
-					.setMessage("An error occured during this note's saving. Try again or contact the dev.")
-					.setCancelable(true);
-	 
-					// create alert dialog
-					AlertDialog alertDialog = alertDialogBuilder.create();
-	 
-					// show it
-					alertDialog.show();
-			Log.e(LOG_TAG, e.getMessage());
+			titlesFrag = (NoteTitlesFragment) getSupportFragmentManager().findFragmentById(R.id.note_titles_fragment);
+			if(titlesFrag == null){
+				titlesFrag = (NoteTitlesFragment) getSupportFragmentManager().findFragmentByTag("titles_fragment");
+			}
+			if(titlesFrag == null){
+				Log.e(LOG_TAG, "the Title Fragment is nowhere !!!");
+			}
+		} catch (ClassCastException e) { 
+			Log.w(LOG_TAG, titlesFrag.toString() + "must be a NoteTitlesFragment");
 		}
-		Log.d(LOG_TAG, dao.findAll().toString());
-	}
-
+		updateTitles();
+		super.onCommit();
+	}*/
 }
