@@ -1,17 +1,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.noelmace.android.demo.littlenote.MainActivity" >
+    tools:context="com.noelmace.android.demo.littlenote.MainActivity"
+    xmlns:comp="http://schemas.android.com/apk/res-auto" >
 
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:showAsAction="never"
+        comp:showAsAction="never"
         android:title="@string/action_settings"/>
     
     <item
         android:id="@+id/action_add"
         android:icon="@drawable/ic_action_add"
-        android:showAsAction="always"
+        comp:showAsAction="always"
         android:title="@string/action_add_title"/>
     
 

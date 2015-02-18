@@ -3,12 +3,16 @@ package com.noelmace.android.demo.littlenote;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -22,6 +26,18 @@ public class NoteContentFragment extends Fragment {
 	private int currentPosition = -1;
 		
 	private SQLiteDaoActivity activity;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+	    super.onCreate(savedInstanceState);
+	    setHasOptionsMenu(true);
+
+	    // Sets "up navigation" for both phone/tablet configurations
+	    ActionBarActivity act = ((ActionBarActivity) getActivity());
+	    if (act.findViewById(R.id.fragment_container) != null) {
+	    	((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+	    }
+	}
 	
 	@Override
 	public void onAttach(Activity activity) {
@@ -66,6 +82,25 @@ public class NoteContentFragment extends Fragment {
 		String content = contents.get(position);
 		Spanned spannedContent = Html.fromHtml(content);
 		noteContentView.setText(spannedContent);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+	    switch (item.getItemId()) {
+	        case android.R.id.home:
+	        	// TODO : nettoyer
+	                Intent parentActivityIntent = new Intent(getActivity(), MainActivity.class);
+	                startActivity(parentActivityIntent);
+	                getActivity().finish();
+	            return true;
+
+	        // Other case statements...
+
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+
 	}
 	
 }

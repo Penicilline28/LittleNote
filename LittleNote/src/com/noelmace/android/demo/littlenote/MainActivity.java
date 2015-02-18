@@ -12,14 +12,14 @@ public class MainActivity extends SQLiteDaoActivity implements
 		NoteTitlesFragment.OnTitleSelectedListener {
 
 	private static final String LOG_TAG = "com.noelmace.android.demo.littlenote.MainActivity";
-	
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
 		if (findViewById(R.id.fragment_container) != null) {
-
+			
 			if (savedInstanceState != null)
 				return;
 

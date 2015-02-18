@@ -2,13 +2,13 @@ package com.noelmace.android.demo.littlenote;
 
 import android.database.sqlite.SQLiteTransactionListener;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 import com.noelmace.android.demo.littlenote.sqlite.DbHelper;
 import com.noelmace.android.demo.littlenote.sqlite.NoteSqliteDao;
 
-public abstract class SQLiteDaoActivity extends FragmentActivity implements SQLiteTransactionListener {
+public abstract class SQLiteDaoActivity extends ActionBarActivity implements SQLiteTransactionListener {
 
 	private static final String TRANSACTION_LOG_KEY = "com.noelmace.android.demo.littlenote.transaction";
 	
