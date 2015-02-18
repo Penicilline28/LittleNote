@@ -45,7 +45,6 @@ public class NoteTitlesFragment extends ListFragment{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		updateList();
   	}
 
 	@Override
@@ -54,6 +53,7 @@ public class NoteTitlesFragment extends ListFragment{
 		if (getFragmentManager().findFragmentById(R.id.note_content_fragment) != null) {
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
+		updateList();
 	}
 	
 	public void updateList(){

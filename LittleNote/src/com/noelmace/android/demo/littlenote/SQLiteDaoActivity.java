@@ -40,7 +40,7 @@ public abstract class SQLiteDaoActivity extends FragmentActivity implements SQLi
 	}
 
 	@Override
-	protected void onResume() {
+	protected void onRestart() {
 		dao = new NoteSqliteDao(this);
 		super.onResume();
 	}
