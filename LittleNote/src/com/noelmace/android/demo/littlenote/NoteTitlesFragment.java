@@ -1,14 +1,21 @@
 package com.noelmace.android.demo.littlenote;
 
+import java.util.List;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Fragment;
 import android.database.sqlite.SQLiteTransactionListener;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.os.AsyncTaskCompat;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.noelmace.android.demo.littlenote.entitties.Note;
 import com.noelmace.android.demo.littlenote.sqlite.NoteSqliteDao;
 
 public class NoteTitlesFragment extends ListFragment{
@@ -45,19 +52,37 @@ public class NoteTitlesFragment extends ListFragment{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (getFragmentManager().findFragmentById(R.id.note_content_fragment) != null) {
+            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        }
   	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
-		if (getFragmentManager().findFragmentById(R.id.note_content_fragment) != null) {
-            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        }
-		updateList();
+		(new UpdateTask()).execute();
+	}
+
+	private class UpdateTask extends AsyncTask<Void, Void, List<Note>> {
+
+
+		// TODO : un sacré ménage au niveau du contexte et des DAO
+		// incompatibilité < 11
+		@SuppressLint("NewApi") @Override
+		protected List<Note> doInBackground(Void... fragments) {
+			return ((SQLiteDaoActivity) getActivity()).getDao().findAll();
+		}
+
+		@Override
+		protected void onPostExecute(List<Note> result) {
+			setListAdapter(new ArrayAdapter<String>(getActivity(), LAYOUT, NoteSqliteDao.Util.getTitles(((SQLiteDaoActivity) getActivity()).getDao().findAll())));
+			super.onPostExecute(result);
+		}
+		
 	}
 	
-	public void updateList(){
+	/*public void updateList(){
 		setListAdapter(new ArrayAdapter<String>(getActivity(), LAYOUT, NoteSqliteDao.Util.getTitles(this.activity.getDao().findAll())));
-	}
+	}*/
 
 }
