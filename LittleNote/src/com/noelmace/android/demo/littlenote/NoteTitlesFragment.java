@@ -4,13 +4,10 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Fragment;
-import android.database.sqlite.SQLiteTransactionListener;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.support.v4.os.AsyncTaskCompat;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -21,7 +18,6 @@ import com.noelmace.android.demo.littlenote.sqlite.NoteSqliteDao;
 public class NoteTitlesFragment extends ListFragment{
 	
 	OnTitleSelectedListener callback;
-	private SQLiteDaoActivity activity;
 	
 	private static final int LAYOUT = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
             android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
@@ -41,7 +37,6 @@ public class NoteTitlesFragment extends ListFragment{
 		super.onAttach(activity);
 		
 		try {
-			this.activity = (SQLiteDaoActivity) activity;
             this.callback = (OnTitleSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
